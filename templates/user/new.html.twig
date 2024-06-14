@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New User{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Create New User</h1>
+
+        {{ form_start(form) }}
+            <div class="mb-3">
+                {{ form_label(form.username) }}
+                {{ form_widget(form.username) }}
+                {{ form_errors(form.username) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.age) }}
+                {{ form_widget(form.age) }}
+                {{ form_errors(form.age) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.guardianDetails) }}
+                {{ form_widget(form.guardianDetails) }}
+                {{ form_errors(form.guardianDetails) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email) }}
+                {{ form_errors(form.email) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.password) }}
+                {{ form_widget(form.password) }}
+                {{ form_errors(form.password) }}
+            </div>
+            <div class="mt-3">
+                {{ form_widget(form.save) }}
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

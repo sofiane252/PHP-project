@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion d'événements{% endblock %}
+    
+{% block body %}
+    <h1 class="my-4">Tous les événements</h1>
+
+    {{ form_start(form) }}
+        <div class="form-row">
+            <div class="col">
+                {{ form_row(form.titre) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.date) }}
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Filtrer</button>
+            </div>
+        </div>
+    {{ form_end(form) }}
+
+        <div class="row mt-2">
+            {% for event in pagination.items %}
+                {% if event.publique or is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">{{ event.titre }}</h5>
+                                <p class="card-text">{{ event.description }}</p>
+                                <p class="card-text">Le {{event.date|date('d-m-Y')}} à {{ event.heure }}h</p>
+                                <p class="card-text">Nombre de personnes maximum :  {{ event.nbrMaxParticipants }}</p>
+                                <p class="card-text">Nombre de personnes inscrites :  {{ event.nbrAttendees }}</p>
+                                <p class="card-text">Publique : {{ event.publique ? 'Oui' : 'Non' }}</p>
+                                <p class="card-text">Créateur : {{ event.creator.nom }} {{ event.creator.prenom }}</p>
+                                <a href="{{ path('event_show', {'id': event.id}) }}" class="btn btn-info mb-1">Détails</a>
+
+                                {% if is_granted('edit', event) %}
+                                    <a href="{{ path('event_edit', {'id': event.id}) }}" class="btn btn-warning mb-1">Modifier</a>
+                                    
+                                    <form action="{{ path('event_delete', {'id': event.id}) }}" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer cet événement ?');" style="display:inline;">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.id) }}">
+                                        <button class="btn btn-danger mb-1 w-100">Supprimer</button>
+                                    </form>
+
+                                {% endif %}
+
+                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    {% if event.attendees.contains(app.user) %}
+                                        <a href="{{ path('event_unsubscribe', {'id': event.id}) }}" class="btn btn-dark ">Se désinscrire</a>
+                                    {% else %}
+                                        <a href="{{ path('event_subscribe', {'id': event.id}) }}" class="btn btn-success">S'inscrire</a>
+                                    {% endif %}
+                                {% else %}
+                                    <p><a href="{{ path('login') }}">Se connecter</a> pour s'inscrire à cet événement.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="pagination">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+{% endblock %}

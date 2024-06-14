@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Événements{% endblock %}
+    
+{% block body %}
+    <h1 class="my-4">Mes Événements</h1>
+
+    {{ form_start(form) }}
+    <div class="form-row">
+        <div class="col-md-4 mb-3">
+            {{ form_row(form.titre) }}
+        </div>
+        <div class="col-md-4 mb-3">
+            {{ form_row(form.date) }}
+        </div>
+        <div class="col-md-4 mb-3 align-self-end">
+            <button class="btn btn-primary">Filtrer</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+    <div class="row">
+        {% for event in pagination.items %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ event.titre }}</h5>
+                        <p class="card-text">{{ event.description }}</p>
+                        <p class="card-text">Le {{ event.date|date('d-m-Y') }} à {{ event.heure }}h</p>
+                        <p class="card-text">Nombre de personnes maximum : {{ event.nbrMaxParticipants }}</p>
+                        <p class="card-text">Nombre de personnes inscrites :  {{ event.nbrAttendees }}</p>
+                        <p class="card-text">Publique : {{ event.publique ? 'Oui' : 'Non' }}</p>
+                        <p class="card-text">Créateur : {{ event.creator.nom }} {{ event.creator.prenom }}</p>
+                        
+                        {% if is_granted('edit', event) %}
+                            <a href="{{ path('event_edit', {'id': event.id}) }}" class="btn btn-warning mb-1">Modifier</a>
+                            <form action="{{ path('event_delete', {'id': event.id}) }}" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer cet événement ?');" style="display:inline;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.id) }}">
+                                <button class="btn btn-danger w-100">Supprimer</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="pagination">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}

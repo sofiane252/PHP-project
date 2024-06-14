@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'événement{% endblock %}
+
+{% block body %}
+    <h1 class="my-4">Modifier l'événement</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+    
+    <a href="{{ path('home') }}" class="btn btn-secondary mt-3">Retour à la liste des événements</a>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche Utilisateur(s){% endblock %}
+
+{% block body %}
+    <h1>Détails de(s) utilisateur(s)</h1>
+    <ul>
+        {% for user in users %}
+            <li>{{ user.username }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

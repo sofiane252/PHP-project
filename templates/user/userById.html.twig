@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateur{% endblock %}
+
+{% block body %}
+    <h1>Détails de l'utilisateur</h1>
+
+    {% if user %}
+        <p>Nom d'utilisateur : {{ user.username }}</p>
+        <p>Email : {{ user.email }}</p>
+    {% else %}
+        <p>Aucun utilisateur trouvé.</p>
+    {% endif %}
+{% endblock %}

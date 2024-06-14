@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le profil{% endblock %}
+
+{% block body %}
+    <h1>Modifier le profil</h1>
+
+    {% for flash_error in app.flashes('danger') %}
+        <div class="alert alert-danger">
+            {{ flash_error }}
+        </div>
+    {% endfor %}
+
+    {{ form_start(editProfileForm) }}
+        {{ form_row(editProfileForm.email) }}
+        {{ form_row(editProfileForm.nom) }}
+        {{ form_row(editProfileForm.prenom) }}
+        <button class="btn btn-primary">Sauvegarder</button>
+    {{ form_end(editProfileForm) }}
+{% endblock %}

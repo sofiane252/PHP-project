@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail de l'événement{% endblock %}
+    
+{% block body %}
+    <h1 class="my-4">{{ event.titre }}</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ event.titre }}</h5>
+            <p class="card-text">{{ event.description }}</p>
+            <p class="card-text">Le {{ event.date|date('d-m-Y') }} à {{ event.heure }}h</p>
+            <p class="card-text">Nombre de personnes maximum :  {{ event.nbrMaxParticipants }}</p>
+            <p class="card-text">Publique : {{ event.publique ? 'Oui' : 'Non' }}</p>
+            <p class="card-text">Créateur : {{ event.creator.nom }} {{ event.creator.prenom }}</p>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% if event.attendees.contains(app.user) %}
+                    <a href="{{ path('event_unsubscribe', {'id': event.id}) }}" class="btn btn-danger">Se désinscrire</a>
+                {% else %}
+                    <a href="{{ path('event_subscribe', {'id': event.id}) }}" class="btn btn-primary">S'inscrire</a>
+                {% endif %}
+            {% else %}
+                <p><a href="{{ path('login') }}">Se connecter</a> pour s'inscrire à cet événement.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

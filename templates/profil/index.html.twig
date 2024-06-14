@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Votre profil</h1>
+
+        <p>Nom: {{ user.nom }}</p>
+        <p>Prénom: {{ user.prenom }}</p>
+        <p>Email: {{ user.email }}</p>
+
+        <a href="{{ path('edit_password') }}" class="btn btn-warning">Modifier le mot de passe</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User Created{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>User Created Successfully!</h1>
+        <p>Your user has been created successfully. You can now view it in the user list.</p>
+        <a href="{{ path('user_list') }}" class="btn btn-primary">Back to user List</a>
+    </div>
+{% endblock %}
