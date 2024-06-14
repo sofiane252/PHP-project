@@ -1,0 +1,9 @@
+knp_paginator:
+    page_range: 5            # Number of pages to display in the pagination menu
+    default_options:
+        page_name: page      # Name of the query parameter
+        sort_field_name: sort
+        sort_direction_name: direction
+        distinct: true       # Ensure distinct results
+    template:
+        pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig' # Use Twitter Bootstrap v4 pagination template
